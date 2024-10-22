@@ -3,31 +3,37 @@ import Tree from './components/Tree';
 import './styles.css';
 const data = [
   {
-    name: 'Team Lead 1',
+    name: 'John Doe',
+    jobDescription: 'Team Lead',
     parentId: '1',
+    friends: 51,
     trainedDays: 50,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
     children: [
       {
-        name: 'Developer 1',
+        name: 'Jane Doe',
+        jobDescription: 'Developer',
         chiledId: '1',
         trainedDays: 25,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
         children: [
           {
-            name: 'Sub Developer 1',
+            name: 'Bob Smith',
+            jobDescription: 'Sub Developer',
             SubchiledId: '1',
             trainedDays: 10,
             imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
           },
           {
-            name: 'Sub Developer 2',
+            name: 'Alice Johnson',
+            jobDescription: 'Sub Developer',
             SubchiledId: '2',
             trainedDays: 15,
             imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
           },
           {
-            name: 'Sub Developer 3',
+            name: 'Michael Brown',
+            jobDescription: 'Sub Developer',
             SubchiledId: '3',
             trainedDays: 18,
             imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
@@ -35,51 +41,60 @@ const data = [
         ],
       },
       {
-        name: 'Developer 2',
+        name: 'Emily Davis',
+        jobDescription: 'Developer',
         trainedDays: 30,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Developer 3',
-        trainedDays: 20,
+        name: 'Sarah Taylor',
+        jobDescription: 'Developer',
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Junior Developer 1',
+        name: 'David Lee',
+        jobDescription: 'Junior Developer',
         trainedDays: 5,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
     ],
   },
   {
-    name: 'Team Lead 2',
+    name: 'Lisa Nguyen',
+    jobDescription: 'Team Lead',
     parentId: '2',
     trainedDays: 40,
+    friends: 51,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
     children: [
       {
-        name: 'Developer 4',
+        name: 'Kevin White',
+        jobDescription: 'Developer',
         trainedDays: 35,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Developer 5',
+        name: 'Olivia Martin',
+        jobDescription: 'Developer',
         trainedDays: 20,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Senior Developer 1',
+        name: 'William Harris',
+        jobDescription: 'Senior Developer',
         trainedDays: 45,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Developer 6',
+        name: 'Rachel Patel',
+        jobDescription: 'Developer',
         chiledId: '4',
         trainedDays: 25,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
         children: [
           {
-            name: 'Intern 1',
+            name: 'Alex Chen',
+            jobDescription: 'Intern',
             SubchiledId: '1',
             trainedDays: 3,
             imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
@@ -89,23 +104,27 @@ const data = [
     ],
   },
   {
-    name: 'Team Lead 3',
+    name: 'James Kim',
+    jobDescription: 'Team Lead',
     parentId: '3',
     trainedDays: 55,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
     children: [
       {
-        name: 'Developer 7',
+        name: 'Kate Lee',
+        jobDescription: 'Developer',
         trainedDays: 40,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Developer 8',
+        name: 'Justin Kim',
+        jobDescription: 'Developer',
         trainedDays: 30,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
       {
-        name: 'Junior Developer 2',
+        name: 'Sophia Patel',
+        jobDescription: 'Junior Developer',
         trainedDays: 12,
         imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
       },
@@ -161,3 +180,4 @@ const App = () => {
 };
 
 export default App;
+

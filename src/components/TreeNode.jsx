@@ -1,60 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles.css';
+import CustomBox from './CustomBox';
+
 const TreeNode = ({ node, expandedParentNode, expandedChildNodes, handleExpandParent, handleExpandChild }) => {
   const isParentExpanded = expandedParentNode === node.name;
 
   return (
     <li className="tree-node">
-      <div className="node-box">
-        <a href="#" onClick={() => handleExpandParent(node)} className="node-content">
-          {node.imageFileUrl && (
-            <img src={node.imageFileUrl} alt={node.name} className="node-image" />
-          )}
-          <div className="node-text">
-            <div className="node-name">{node.name}</div>
-            <div className="node-days">Days Trained: {node.trainedDays}</div>
-          </div>
-        </a>
-      </div>
-
-      {/* Only display children if parent is expanded */}
+      <CustomBox
+        childNode={node}
+        onClick={() => handleExpandParent(node)}
+      />
       {node.children && isParentExpanded && (
         <ul>
           {node.children.map((childNode, index) => (
             <li key={index} className="tree-node">
-              <div className="node-box">
-                {/* Child click handling */}
-                <a
-                  href="#"
-                  onClick={() => handleExpandChild(node.name, childNode.name)}
-                  className="node-content"
-                >
-                  {childNode.imageFileUrl && (
-                    <img src={childNode.imageFileUrl} alt={childNode.name} className="node-image" />
-                  )}
-                  <div className="node-text">
-                    <div className="node-name">{childNode.name}</div>
-                    <div className="node-days">Days Trained: {childNode.trainedDays}</div>
-                  </div>
-                </a>
-              </div>
+              <CustomBox
+                childNode={childNode}
+                onClick={() => handleExpandChild(node.name, childNode.name)}
+              />
 
-              {/* Sub-children expansion */}
               {childNode.children && expandedChildNodes[childNode.name] && (
                 <ul>
                   {childNode.children.map((subChild, index) => (
                     <li key={index} className="tree-node">
-                      <div className="node-box">
-                        <a href="#" className="node-content">
-                          {subChild.imageFileUrl && (
-                            <img src={subChild.imageFileUrl} alt={subChild.name} className="node-image" />
-                          )}
-                          <div className="node-text">
-                            <div className="node-name">{subChild.name}</div>
-                            <div className="node-days">Days Trained: {subChild.trainedDays}</div>
-                          </div>
-                        </a>
-                      </div>
+                      <CustomBox
+                        childNode={subChild}
+                        onClick={() => handleExpandChild(node.name, subChild.name)}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -67,8 +40,4 @@ const TreeNode = ({ node, expandedParentNode, expandedChildNodes, handleExpandPa
   );
 };
 
-
-
-
 export default TreeNode;
-
