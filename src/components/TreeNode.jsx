@@ -1,34 +1,25 @@
 import React from 'react';
 import CustomBox from './CustomBox';
 
-const TreeNode = ({
-  node,
-  expandedParentNode,
-  expandedChildNodes,
-  handleExpandParent,
-  handleExpandChild,
-  getChildrenNodes
-}) => {
-  const isParentExpanded = expandedParentNode === node.parentId;
-  const childrenNodes = getChildrenNodes(node.parentId);
-  
-  console.log(childrenNodes, 'children');
-  console.log(node, 'node');
-  
+const TreeNode = ({ node, isExpanded, onToggle, getChildrenNodes, expandedChildNodes, isParent }) => {
+  const childrenNodes = getChildrenNodes(node.id);
+
   return (
     <li>
-      <CustomBox childNode={node} onClick={() => handleExpandParent(node)} />
-      {isParentExpanded && childrenNodes.length > 0 && (
+      {/* Render the node content */}
+      <CustomBox childNode={node} onClick={() => onToggle(node.id, isParent)} />
+      {/* Conditionally render child nodes if this node is expanded */}
+      {isExpanded && childrenNodes.length > 0 && (
         <ul>
-          {childrenNodes.map((childNode, index) => (
+          {childrenNodes.map((childNode) => (
             <TreeNode
-              key={index}
+              key={childNode.id}
               node={childNode}
-              expandedParentNode={expandedParentNode}
-              expandedChildNodes={expandedChildNodes}
-              handleExpandParent={handleExpandParent}
-              handleExpandChild={handleExpandChild}
+              isExpanded={!!expandedChildNodes[childNode.id]} // Handle child node expansion state
+              onToggle={onToggle} // Pass down the toggle function
               getChildrenNodes={getChildrenNodes}
+              expandedChildNodes={expandedChildNodes} // Continue passing the expanded state for children
+              isParent={false} // Children nodes are not parent nodes
             />
           ))}
         </ul>

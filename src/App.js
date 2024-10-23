@@ -1,47 +1,40 @@
 import React, { useState } from 'react';
 import Tree from './components/Tree';
 import './styles.css';
+
 const data = [
     {
+    id: '1',
+    children: ['2','3'],
     name: 'John Doe',
     jobDescription: 'Team Lead',
-    parentId: '1', 
     friends: 51,
-    parentIds: [],
     trainedDays: 50,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
     },
     {
+    id: '2',
     name: 'Mouhammad Ali',
+    children: [],
     jobDescription: 'Team Lead',
-    parentId: '2', 
     friends: 51,
-    parentIds: [],
     trainedDays: 50,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
   },
   {
-    name: 'ali Doe',
+    id: '3',
+    name: 'Ali Doe',
+    children: ['2'],
     jobDescription: 'Developer',
-    parentId: null,
-    parentIds: ['1'],
     trainedDays: 25,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
   },
   {
+    id: '4',
     name: 'David Lee',
     jobDescription: 'Junior Developer',
-    parentId: '3', 
-    parentIds: ['1','2'],
     trainedDays: 5,
-    imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-  },
-    {
-    name: 'Jounior David Lee',
-    jobDescription: 'Junior Developer',
-    parentId: null, 
-    parentIds: ['3'],
-    trainedDays: 5,
+    children: ['3'],
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
   },
 ];
@@ -57,15 +50,22 @@ const App = () => {
         const hasMatch =
           node.name.toLowerCase().includes(query.toLowerCase()) ||
           (node.children &&
-            filterTree(node.children, query).length > 0);
+            filterTree(
+              nodes.filter(child => node.children.includes(child.id)),
+              query
+            ).length > 0);
 
         if (!hasMatch) {
           return null;
         }
+
         return {
           ...node,
           children: node.children
-            ? filterTree(node.children, query)
+            ? filterTree(
+                nodes.filter(child => node.children.includes(child.id)),
+                query
+              )
             : [],
         };
       })
@@ -78,7 +78,6 @@ const App = () => {
     <div>
       <h1>Team Leads and Developers Training Tree</h1>
 
-      {/* Search input */}
       <input
         type="text"
         placeholder="Search..."
@@ -86,11 +85,9 @@ const App = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      {/* Display the filtered tree */}
       <Tree data={filteredData} />
     </div>
   );
 };
 
 export default App;
-

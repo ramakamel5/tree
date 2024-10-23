@@ -2,50 +2,47 @@ import React, { useState } from 'react';
 import TreeNode from './TreeNode';
 
 const Tree = ({ data }) => {
-  const [expandedParentNode, setExpandedParentNode] = useState(null);
-  const [expandedChildNodes, setExpandedChildNodes] = useState({});
+  const [expandedParentNode, setExpandedParentNode] = useState(null); // Track the expanded parent
+  const [expandedChildNodes, setExpandedChildNodes] = useState({}); // Track the expanded child nodes
 
-  const handleExpandParent = (node) => {
-    setExpandedParentNode((prevNode) =>
-      prevNode === node.parentId ? null : node.parentId
-    );
+  // Toggle function to expand/collapse nodes
+  const handleToggle = (nodeId, isParent) => {
+    if (isParent) {
+      setExpandedParentNode((prevState) => (prevState === nodeId ? null : nodeId)); // Toggle parent node
+    } else {
+      setExpandedChildNodes((prevState) => ({
+        ...prevState,
+        [nodeId]: !prevState[nodeId], // Toggle child node
+      }));
+    }
   };
 
-  const handleExpandChild = (childNodeName) => {
-    setExpandedChildNodes((prevState) => ({
-      ...prevState,
-      [childNodeName]: !prevState[childNodeName],
-    }));
-  };
-
-  const getRootNodes = (nodes) => {
-    return nodes.filter(
-      (node) => node.parentId 
-    );
-  };
-
+  // Function to get the child nodes of a parent node
   const getChildrenNodes = (parentId) => {
-    console.log(parentId,'firstNode')
-    return data.filter(
-      
-      (node) => node.parentIds.includes(parentId)
-    );
+    const parentNode = data.find((node) => node.id === parentId);
+    return parentNode?.children
+      ? data.filter((node) => parentNode.children.includes(node.id))
+      : [];
   };
 
-  const rootNodes = getRootNodes(data);
-  console.log(rootNodes,'rootNodes')
+  // Function to find the top-level nodes (nodes that don't have a parent)
+  const getRootNodes = () => {
+    const childNodeIds = data.flatMap(node => node.children);
+    return data.filter(node => !childNodeIds.includes(node.id)); // Nodes not listed as children anywhere
+  };
+
   return (
     <div className="tree">
       <ul>
-        {rootNodes.map((node, index) => (
+        {getRootNodes().map((node) => (
           <TreeNode
-            key={index}
+            key={node.id}
             node={node}
-            expandedParentNode={expandedParentNode}
-            expandedChildNodes={expandedChildNodes}
-            handleExpandParent={handleExpandParent}
-            handleExpandChild={handleExpandChild}
+            isExpanded={expandedParentNode === node.id} // Handle parent-specific expansion state
+            onToggle={handleToggle}
             getChildrenNodes={getChildrenNodes}
+            expandedChildNodes={expandedChildNodes} // Pass expanded child nodes
+            isParent
           />
         ))}
       </ul>
