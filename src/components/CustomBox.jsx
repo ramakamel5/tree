@@ -42,5 +42,3 @@ function CustomBox({ childNode, onClick }) {
 }
 
 export default CustomBox;
-
-

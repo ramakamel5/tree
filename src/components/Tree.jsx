@@ -1,44 +1,51 @@
 import React, { useState } from 'react';
 import TreeNode from './TreeNode';
-import { List } from 'react-virtualized';
 
 const Tree = ({ data }) => {
   const [expandedParentNode, setExpandedParentNode] = useState(null);
-  const [expandedChildNodes, setExpandedChildNodes] = useState({}); 
+  const [expandedChildNodes, setExpandedChildNodes] = useState({});
 
   const handleExpandParent = (node) => {
-    if (expandedParentNode === node.name) {
-      setExpandedParentNode(null);
-    } else {
-      setExpandedParentNode(node.name);
-    }
+    setExpandedParentNode((prevNode) =>
+      prevNode === node.parentId ? null : node.parentId
+    );
   };
 
-  const handleExpandChild = (parentNodeName, childNodeName) => {
+  const handleExpandChild = (childNodeName) => {
     setExpandedChildNodes((prevState) => ({
       ...prevState,
-      [childNodeName]: !prevState[childNodeName], 
+      [childNodeName]: !prevState[childNodeName],
     }));
   };
 
-
-  const filterNodesWithParentId = (nodes) => {
-    return nodes.filter((node) => node.parentId); 
+  const getRootNodes = (nodes) => {
+    return nodes.filter(
+      (node) => node.parentId 
+    );
   };
 
-  const filteredData = filterNodesWithParentId(data); 
+  const getChildrenNodes = (parentId) => {
+    console.log(parentId,'firstNode')
+    return data.filter(
+      
+      (node) => node.parentIds.includes(parentId)
+    );
+  };
 
+  const rootNodes = getRootNodes(data);
+  console.log(rootNodes,'rootNodes')
   return (
     <div className="tree">
       <ul>
-        {filteredData.map((node, index) => (
+        {rootNodes.map((node, index) => (
           <TreeNode
             key={index}
             node={node}
-            expandedParentNode={expandedParentNode} 
-            expandedChildNodes={expandedChildNodes} 
+            expandedParentNode={expandedParentNode}
+            expandedChildNodes={expandedChildNodes}
             handleExpandParent={handleExpandParent}
-            handleExpandChild={handleExpandChild} 
+            handleExpandChild={handleExpandChild}
+            getChildrenNodes={getChildrenNodes}
           />
         ))}
       </ul>

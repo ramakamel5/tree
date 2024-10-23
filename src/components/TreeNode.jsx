@@ -1,38 +1,35 @@
 import React from 'react';
-import '../styles.css';
 import CustomBox from './CustomBox';
 
-const TreeNode = ({ node, expandedParentNode, expandedChildNodes, handleExpandParent, handleExpandChild }) => {
-  const isParentExpanded = expandedParentNode === node.name;
-
+const TreeNode = ({
+  node,
+  expandedParentNode,
+  expandedChildNodes,
+  handleExpandParent,
+  handleExpandChild,
+  getChildrenNodes
+}) => {
+  const isParentExpanded = expandedParentNode === node.parentId;
+  const childrenNodes = getChildrenNodes(node.parentId);
+  
+  console.log(childrenNodes, 'children');
+  console.log(node, 'node');
+  
   return (
-    <li className="tree-node">
-      <CustomBox
-        childNode={node}
-        onClick={() => handleExpandParent(node)}
-      />
-      {node.children && isParentExpanded && (
+    <li>
+      <CustomBox childNode={node} onClick={() => handleExpandParent(node)} />
+      {isParentExpanded && childrenNodes.length > 0 && (
         <ul>
-          {node.children.map((childNode, index) => (
-            <li key={index} className="tree-node">
-              <CustomBox
-                childNode={childNode}
-                onClick={() => handleExpandChild(node.name, childNode.name)}
-              />
-
-              {childNode.children && expandedChildNodes[childNode.name] && (
-                <ul>
-                  {childNode.children.map((subChild, index) => (
-                    <li key={index} className="tree-node">
-                      <CustomBox
-                        childNode={subChild}
-                        onClick={() => handleExpandChild(node.name, subChild.name)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+          {childrenNodes.map((childNode, index) => (
+            <TreeNode
+              key={index}
+              node={childNode}
+              expandedParentNode={expandedParentNode}
+              expandedChildNodes={expandedChildNodes}
+              handleExpandParent={handleExpandParent}
+              handleExpandChild={handleExpandChild}
+              getChildrenNodes={getChildrenNodes}
+            />
           ))}
         </ul>
       )}
