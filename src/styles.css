@@ -14,6 +14,44 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
+.app-container {
+  text-align: center;
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.search-box-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-box {
+  width: 60%;
+  max-width: 600px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-box:focus {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Tree styles */
 .tree ul {
   padding-top: 20px;
   position: relative;
@@ -134,7 +172,9 @@ body, html {
     width: 150px;
     margin: 7px auto;
 }
-
+#root{
+  width: 100vw
+}
 .trained-days-box div {
     display: flex;
     align-items: center; /* Aligns icon and text horizontally */
@@ -171,6 +211,6 @@ body, html {
 }
 
 .node-job-description{
-   font-size: 0,9rem;
-   color: #666
+   font-size: 0.9rem;
+   color: #666;
 }

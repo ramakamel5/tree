@@ -3,16 +3,16 @@ import Tree from './components/Tree';
 import './styles.css';
 
 const data = [
-    {
+  {
     id: '1',
-    children: ['2','3'],
+    children: ['2', '3'],
     name: 'John Doe',
     jobDescription: 'Team Lead',
     friends: 51,
     trainedDays: 50,
     imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-    },
-    {
+  },
+  {
     id: '2',
     name: 'Mouhammad Ali',
     children: [],
@@ -75,15 +75,18 @@ const App = () => {
   const filteredData = filterTree(data, searchTerm);
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Team Leads and Developers Training Tree</h1>
 
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <div className="search-box-container">
+        <input
+          type="text"
+          className="search-box"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
       <Tree data={filteredData} />
     </div>
