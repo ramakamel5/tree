@@ -1,46 +1,39 @@
 import React, { useState } from 'react';
+import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Tree from './components/Tree';
 import './styles.css';
 
-const data = [
-  {
-    id: '1',
-    children: ['2', '3'],
-    name: 'John Doe',
-    jobDescription: 'Team Lead',
-    friends: 51,
-    trainedDays: 50,
-    imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-  },
-  {
-    id: '2',
-    name: 'Mouhammad Ali',
-    children: [],
-    jobDescription: 'Team Lead',
-    friends: 51,
-    trainedDays: 50,
-    imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-  },
-  {
-    id: '3',
-    name: 'Ali Doe',
-    children: ['2'],
-    jobDescription: 'Developer',
-    trainedDays: 25,
-    imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-  },
-  {
-    id: '4',
-    name: 'David Lee',
-    jobDescription: 'Junior Developer',
-    trainedDays: 5,
-    children: ['3'],
-    imageFileUrl: 'https://www.kasandbox.org/programming-images/avatars/spunky-sam.png',
-  },
-];
+const queryClient = new QueryClient();
+
+const fetchTreeData = async () => {
+  try {
+    const response = await fetch('https://b8b6-2001-9e8-65c3-f500-e13d-fed5-f53-656d.ngrok-free.app/developer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        "mens": []
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw new Error('Failed to fetch data');
+  }
+};
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { data: fetchedData = [], error, isLoading } = useQuery({
+    queryKey: ['treeData'],
+    queryFn: fetchTreeData,
+  });
 
   const filterTree = (nodes, query) => {
     if (!query) return nodes;
@@ -72,7 +65,11 @@ const App = () => {
       .filter(node => node !== null);
   };
 
-  const filteredData = filterTree(data, searchTerm);
+  const filteredData = filterTree(fetchedData, searchTerm);
+  const treeDataToDisplay = searchTerm ? filteredData : fetchedData;
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <div className="app-container">
@@ -88,9 +85,15 @@ const App = () => {
         />
       </div>
 
-      <Tree data={filteredData} />
+      <Tree data={treeDataToDisplay} />
     </div>
   );
 };
 
-export default App;
+const Root = () => (
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>
+);
+
+export default Root;
