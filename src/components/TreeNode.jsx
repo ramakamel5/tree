@@ -81,4 +81,4 @@ const TreeNode = ({ node, childrenData }) => {
 
 };
 
-export default TreeNode;
+export default TreeNode
