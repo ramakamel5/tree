@@ -7,16 +7,19 @@ const queryClient = new QueryClient();
 
 const fetchTreeData = async () => {
   try {
-    const response = await fetch('https://b8b6-2001-9e8-65c3-f500-e13d-fed5-f53-656d.ngrok-free.app/developer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        "mens": []
-      }),
-    });
+    const response = await fetch(
+      "https://cca9-2001-9e8-65cd-1800-d4b3-f4e4-1548-7514.ngrok-free.app/developer",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          mens: [],
+        }),
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

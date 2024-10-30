@@ -4,14 +4,11 @@ import '../styles.css';
 import DefaultParentNode from './ParentDefaultBox';
 
 const TreeNode = ({ node, childrenData }) => {
-  const [expandChildrenNodes, setExpandChildrenNodes] = useState(false);
+  const [expandChildrenNodes, setExpandChildrenNodes] = useState(true);
   const [displayedCount, setDisplayedCount] = useState(10);
   const [fetchedData, setFetchedData] = useState({});
-
-  console.log(node,)
   const shouldScroll = childrenData?.mens?.length > displayedCount;
   
-
   const handleNodeClick = () => {
     setExpandChildrenNodes((prev) => !prev);
   };
@@ -20,9 +17,9 @@ const TreeNode = ({ node, childrenData }) => {
     setDisplayedCount((prevCount) => prevCount + 20);
   };
 
-  const handleChildClick = async (child) => {
+  const handleChildClick = async (child) => {    
     try {
-      const response = await fetch('https://b8b6-2001-9e8-65c3-f500-e13d-fed5-f53-656d.ngrok-free.app/developer', {
+      const response = await fetch('https://cca9-2001-9e8-65cd-1800-d4b3-f4e4-1548-7514.ngrok-free.app/developer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +47,8 @@ const TreeNode = ({ node, childrenData }) => {
       return (
     
     <li style={{width: '100%'}}>
-      <DefaultParentNode  childNode={node} onClick={handleNodeClick} />
+      {/* {node.name} */}
+      {node.name === 'Leader' && <DefaultParentNode childNode={node} onClick={handleNodeClick} />}
       {expandChildrenNodes && (
         <ul className={`child-nodes ${shouldScroll ? 'scrollable' : ''}`}>
           {childrenData?.mens?.slice(0, displayedCount).map((child, index) => (
